@@ -1,7 +1,7 @@
 package com.company;
 
 public class Uploader extends Thread {
-    private int file = 1;
+    private int file = 0;
     private int SpeedUploader = 500 / 20;
 
     public Uploader() {

@@ -9,9 +9,9 @@ public class Downloaders extends Thread {
     private int downloaderSpeed = 500 / 100;
     private CountDownLatch countDownLatch;
 
-    public Downloaders(Semaphore semaphore, int downloaderSpeed, CountDownLatch countDownLatch) {
+    public Downloaders(int downloaders, Semaphore semaphore, CountDownLatch countDownLatch) {
+        this.downloaders = downloaders;
         this.semaphore = semaphore;
-        this.downloaderSpeed = downloaderSpeed;
         this.countDownLatch = countDownLatch;
     }
 
@@ -19,10 +19,11 @@ public class Downloaders extends Thread {
     public void run() {
         try {
             semaphore.acquire();
-            System.out.printf("User Kuba is downloading file \n" , downloaders);
+            System.out.printf("User %d is downloading file \n" , downloaders);
             sleep(downloaderSpeed * 100);
-            System.out.printf("User Maks downloaded and exit \n", downloaders);
+            System.out.printf("User %d downloaded and exit \n", downloaders);
             semaphore.release();
+            countDownLatch.countDown();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
